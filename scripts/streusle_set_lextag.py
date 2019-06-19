@@ -18,6 +18,7 @@ def main(args):
     with open(args.fname, encoding="utf-8") as f, open(args.lextags, encoding="utf-8") as lextags_lines:
         print_sents_json(swap_lextags(load_sents(f), lextags_lines))
 
+
 if __name__ == "__main__":
     logging.basicConfig(format="%(asctime)s - %(levelname)s "
                         "- %(name)s - %(message)s",
