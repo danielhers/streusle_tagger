@@ -2,8 +2,8 @@ import argparse
 import ast
 import logging
 
-from streusle.conllulex2json import load_sents, print_sents_json
-from streusle.supersenses import coarsen_pss
+from conllulex2json import load_sents, print_json
+from supersenses import coarsen_pss
 
 logger = logging.getLogger(__name__)
 
@@ -25,13 +25,13 @@ def swap_lextags(sents, lextags_lists):
 
 def main(args):
     with open(args.fname, encoding="utf-8") as f, open(args.lextags, encoding="utf-8") as lextags_lines:
-        print_sents_json(swap_lextags(load_sents(f, ss_mapper=SSMapper(args.depth)),
-                                      map(ast.literal_eval, lextags_lines)))
+        print_json(swap_lextags(load_sents(f, ss_mapper=SSMapper(args.depth)),
+                                map(ast.literal_eval, lextags_lines)))
 
 
 if __name__ == "__main__":
     logging.basicConfig(format="%(asctime)s - %(levelname)s "
-                        "- %(name)s - %(message)s",
+                               "- %(name)s - %(message)s",
                         level=logging.INFO)
     argparser = argparse.ArgumentParser(description="Swap lextags into a STREUSLE file")
     argparser.add_argument("fname", help="conllulex or json file with full STREUSLE annotation")

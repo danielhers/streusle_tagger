@@ -4,8 +4,8 @@ import logging
 from collections import defaultdict, Counter
 from io import StringIO, BytesIO
 
-from streusle.conllulex2json import load_sents, print_sents_json
-from streusle.streuseval import to_json, to_tsv, eval_sys
+from conllulex2json import load_sents, print_json
+from streuseval import to_json, to_tsv, eval_sys
 from tqdm import tqdm
 
 from scripts.streusle_set_lextag import SSMapper, swap_lextags
@@ -27,7 +27,7 @@ def main(args):
             pred_sents = list(tqdm(swap_lextags(gold_sents, map(ast.literal_eval, f)),
                                    desc="Reading " + lextags_file, unit=" lines"))
         s = StringIO()
-        print_sents_json(pred_sents, fh=s)
+        print_json(pred_sents, fh=s)
         s = BytesIO(s.getvalue().encode("utf-8"))
         s.name = "autoid.json"
         scores = eval_sys(s, gold_sents, ss_mapper)
